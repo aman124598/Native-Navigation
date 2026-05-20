@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import {
@@ -7,6 +8,9 @@ import {
 import { Button } from '@react-navigation/elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DynamicTabNavigator from './src/navigators/tabs/DynamicTabNavigator';
+import StaticNavigator from './src/navigators/stack/StaticNavigator';
+import StaticDrawerNavigator from './src/navigators/drawer/StaticDrawerNavigator';
+import DynamicDrawerNavigator from './src/navigators/drawer/DynamicDrawerNavigator';
 
 function HomeScreen() {
   const navigation = useNavigation<any>();
@@ -43,7 +47,13 @@ const MyTabs = createBottomTabNavigator({
 const Navigation = createStaticNavigation(MyTabs);
 
 export default function App() {
-  return <DynamicTabNavigator />;
+  return (
+    <>
+      <StatusBar style="dark" backgroundColor="#ffffff" />
+      <StaticDrawerNavigator />
+    </>
+  );
+
 }
 
 // 1. navigate() Go to a screen by name,
