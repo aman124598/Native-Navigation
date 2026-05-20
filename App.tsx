@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { Text, View } from 'react-native';
+import {
+  createStaticNavigation,
+  useNavigation,
+} from '@react-navigation/native';
+import { Button } from '@react-navigation/elements';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-export default function App() {
+function HomeScreen() {
+  const navigation = useNavigation<any>();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button onPress={() => navigation.navigate('Profile')}>
+        Go to Profile
+      </Button>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+function ProfileScreen() {
+  const navigation = useNavigation<any>();
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Profile Screen</Text>
+      <Button onPress={() => navigation.navigate('Home')}>Go to Home</Button>
+    </View>
+  );
+}
+
+const MyTabs = createBottomTabNavigator({
+  screens: {
+    Home: HomeScreen,
+    Profile: ProfileScreen,
   },
 });
+
+const Navigation = createStaticNavigation(MyTabs);
+
+export default function App() {
+  return <Navigation />;
+}
+
+// 1. navigate() Go to a screen by name,
+// 2.goBack() Go back to the previous screen in the stack,
+// 3.push() Go to a screen by name, even if you're already on that screen,
+// 4.popToTop() Go back to the first screen in the stack,
+// 5.replace() Replace the current screen with another one,
+// 6.reset() Replace the navigation state with a new one,
+// 7.setParams() Change the props of the current route,
+// 8.isFocused() Determine if the screen is currently focused.
